@@ -74,7 +74,7 @@ export function Navbar() {
             ref={avatarButtonRef}
             className="brand"
             type="button"
-            aria-label={`${profileOpen ? 'Tutup' : 'Buka'} kartu profil Michio CeiiAslii`}
+            aria-label={`${profileOpen ? 'Tutup' : 'Buka'} kartu profil Michio`}
             aria-expanded={profileOpen}
             aria-controls="navbar-profile-card"
             onClick={toggleProfile}
@@ -90,16 +90,16 @@ export function Navbar() {
             aria-hidden={!profileOpen}
           >
             <div className="profile-card__identity">
-              <img className="profile-card__avatar" src="/kr0npr1nz.jpg" alt="Michio CeiiAslii" width="58" height="58" />
+              <img className="profile-card__avatar" src="/kr0npr1nz.jpg" alt="Michio" width="58" height="58" />
               <div>
                 <p className="profile-card__label">Profile note</p>
-                <h2 id="navbar-profile-name">Michio CeiiAslii</h2>
+                <h2 id="navbar-profile-name">Michio</h2>
               </div>
             </div>
             <p className="profile-card__description">Networks, Linux, Android customization, and the applications that run on top of them.</p>
             <div className="profile-card__links">
               <a href="#about" tabIndex={profileOpen ? 0 : -1} onClick={closeProfile}>About</a>
-              <a href="#home" tabIndex={profileOpen ? 0 : -1} onClick={closeProfile}>Kembali ke atas</a>
+              <a href="#home" tabIndex={profileOpen ? 0 : -1} onClick={closeProfile}>Back to top</a>
             </div>
           </section>
         </div>

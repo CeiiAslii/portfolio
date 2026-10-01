@@ -6,6 +6,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [avatarPulse, setAvatarPulse] = useState(0)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -34,7 +35,11 @@ export function Navbar() {
   return (
     <header className={`site-nav ${scrolled ? 'site-nav--scrolled' : ''}`}>
       <nav className="site-nav__inner" aria-label="Primary navigation">
-        <a className="brand" href="#home" aria-label="MC home">MC<span>.</span></a>
+        <a className="brand" href="#home" aria-label="Michio CeiiAslii, kembali ke beranda" onClick={() => setAvatarPulse((pulse) => pulse + 1)}>
+          <span key={avatarPulse} className={`brand__avatar ${avatarPulse ? 'brand__avatar--pulse' : ''}`}>
+            <img src="/kr0npr1nz.jpg" alt="" width="36" height="36" />
+          </span>
+        </a>
         <div className="site-nav__links">
           {navLinks.map(({ label, href }) => <a key={href} href={href} className={activeSection === href ? 'is-active' : ''}>{label}</a>)}
         </div>

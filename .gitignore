@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.vercel/
+.env*
+!.env.example
+
+/memory/
+/qa/
+/AGENTS.md
+/DREAMS.md
+/IDENTITY.md
+/SOUL.md
+/USER.md
+.playwright-mcp/
+artifacts/

@@ -1,0 +1,66 @@
+.router-wifi,
+.kernel-illustration[role="button"] {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.router-wifi__target {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+
+.router-wifi:focus-visible .router-wifi__target {
+  stroke: #242b27;
+  stroke-width: 2.5;
+}
+
+.kernel-illustration[role="button"]:focus-visible {
+  outline: 2px solid #242b27;
+  outline-offset: 4px;
+}
+
+.router-wifi__signal {
+  pointer-events: none;
+}
+
+.router-wifi__arc {
+  opacity: 0;
+}
+
+.router-wifi__signal--active .router-wifi__arc {
+  animation: router-signal-send .65s ease-out both;
+}
+
+.router-wifi__signal--active .router-wifi__arc:nth-child(2) {
+  animation-delay: .12s;
+}
+
+.router-wifi__signal--active .router-wifi__arc:nth-child(3) {
+  animation-delay: .24s;
+}
+
+@keyframes router-signal-send {
+  0% { opacity: 0; }
+  40% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .router-wifi,
+  .router-wifi *,
+  .kernel-illustration,
+  .kernel-illustration * {
+    transition: none !important;
+  }
+
+  .kernel-illustration .kernel-drawing,
+  .kernel-illustration .kernel-drawing * {
+    animation: none !important;
+  }
+
+  .router-wifi__signal--active .router-wifi__arc {
+    animation: none;
+    opacity: 0;
+  }
+}

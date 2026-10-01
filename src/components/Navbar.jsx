@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { githubUrl, navLinks } from '../data/portfolio'
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [profileOpen, setProfileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('')
-  const [avatarPulse, setAvatarPulse] = useState(0)
+  const profileRegionRef = useRef(null)
+  const avatarButtonRef = useRef(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -25,26 +27,87 @@ export function Navbar() {
   }, [])
 
   useEffect(() => {
-    const closeOnEscape = (event) => {
+    const closeMenuOnEscape = (event) => {
       if (event.key === 'Escape') setMenuOpen(false)
     }
-    window.addEventListener('keydown', closeOnEscape)
-    return () => window.removeEventListener('keydown', closeOnEscape)
+    window.addEventListener('keydown', closeMenuOnEscape)
+    return () => window.removeEventListener('keydown', closeMenuOnEscape)
   }, [])
+
+  useEffect(() => {
+    if (!profileOpen) return undefined
+
+    const closeOutside = (event) => {
+      if (!profileRegionRef.current?.contains(event.target)) setProfileOpen(false)
+    }
+    const closeOnEscape = (event) => {
+      if (event.key !== 'Escape') return
+      setProfileOpen(false)
+      avatarButtonRef.current?.focus()
+    }
+
+    document.addEventListener('pointerdown', closeOutside)
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside)
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [profileOpen])
+
+  const toggleProfile = () => {
+    setMenuOpen(false)
+    setProfileOpen((open) => !open)
+  }
+
+  const toggleMenu = () => {
+    setProfileOpen(false)
+    setMenuOpen((open) => !open)
+  }
+
+  const closeProfile = () => setProfileOpen(false)
 
   return (
     <header className={`site-nav ${scrolled ? 'site-nav--scrolled' : ''}`}>
       <nav className="site-nav__inner" aria-label="Primary navigation">
-        <a className="brand" href="#home" aria-label="Michio CeiiAslii, kembali ke beranda" onClick={() => setAvatarPulse((pulse) => pulse + 1)}>
-          <span key={avatarPulse} className={`brand__avatar ${avatarPulse ? 'brand__avatar--pulse' : ''}`}>
-            <img src="/kr0npr1nz.jpg" alt="" width="36" height="36" />
-          </span>
-        </a>
+        <div className="profile-popover" ref={profileRegionRef}>
+          <button
+            ref={avatarButtonRef}
+            className="brand"
+            type="button"
+            aria-label={`${profileOpen ? 'Tutup' : 'Buka'} kartu profil Michio CeiiAslii`}
+            aria-expanded={profileOpen}
+            aria-controls="navbar-profile-card"
+            onClick={toggleProfile}
+          >
+            <span className="brand__avatar">
+              <img src="/kr0npr1nz.jpg" alt="" width="36" height="36" />
+            </span>
+          </button>
+          <section
+            id="navbar-profile-card"
+            className={`profile-card${profileOpen ? ' is-open' : ''}`}
+            aria-labelledby="navbar-profile-name"
+            aria-hidden={!profileOpen}
+          >
+            <div className="profile-card__identity">
+              <img className="profile-card__avatar" src="/kr0npr1nz.jpg" alt="Michio CeiiAslii" width="58" height="58" />
+              <div>
+                <p className="profile-card__label">Profile note</p>
+                <h2 id="navbar-profile-name">Michio CeiiAslii</h2>
+              </div>
+            </div>
+            <p className="profile-card__description">Networks, Linux, Android customization, and the applications that run on top of them.</p>
+            <div className="profile-card__links">
+              <a href="#about" tabIndex={profileOpen ? 0 : -1} onClick={closeProfile}>About</a>
+              <a href="#home" tabIndex={profileOpen ? 0 : -1} onClick={closeProfile}>Kembali ke atas</a>
+            </div>
+          </section>
+        </div>
         <div className="site-nav__links">
           {navLinks.map(({ label, href }) => <a key={href} href={href} className={activeSection === href ? 'is-active' : ''}>{label}</a>)}
         </div>
         <a className="nav-github" href={githubUrl} target="_blank" rel="noreferrer">GitHub <ArrowUpRight size={14} /></a>
-        <button className="menu-button" type="button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen((open) => !open)}>
+        <button className="menu-button" type="button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={toggleMenu}>
           {menuOpen ? <X size={19} /> : <Menu size={19} />}<span>{menuOpen ? 'Close' : 'Menu'}</span>
         </button>
       </nav>

@@ -68,3 +68,12 @@ Scope: only the MT6781 illustration in the Realme 8i project card. Antislop rema
 - The chip lift is limited to 3px and returns to its original position, so it establishes the chip as the focal point without turning the illustration into a perpetual motion element.
 - Desktop hover adds a brief, fine-pointer-only physical tilt and trace glow. A coarse-pointer tap can replay the same short sequence. Reduced-motion rendering keeps every illustrated part visible and static.
 
+## Navbar profile card
+
+Scope: only the avatar interaction and its attached profile card. Navbar height, spacing, and surrounding navigation remain unchanged. Dials remain ENERGY 3 / RHYTHM 3 / MOTION 1, with a brief local MOTION 2 transition for opening and closing.
+
+- The card uses the existing cream paper, ink edge, Fraunces name, and burnt-orange offset shadow so it reads as another note from the same illustrated workbench.
+- Scale, fade, and an 8px downward entrance establish that the card comes from the avatar. The reverse transition preserves spatial continuity when it closes, while reduced motion removes both transform and transition.
+- The avatar keeps its 44px control area. Fine-pointer hover adds only a four-degree tilt and one thin orange ring; touch uses the same click toggle without hover-dependent behavior.
+- About and Kembali ke atas target existing sections. Explicit expanded state, outside press, Escape with focus return, and closed-state tab removal keep the popover usable across keyboard, mouse, and touch input.
+
